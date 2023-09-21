@@ -47,12 +47,12 @@ class FudanAPI:
         start_url = 'https://sport.fudan.edu.cn/sapi/run/start'
         params = {'userid': self.user_id,
                   'token': self.token,
-                  'route_id': self.route.id,
-                  'route_type': self.route.type,
+                  'route_id': str(self.route.id),
+                  'route_type': str(self.route.type),
                   'system': self.system,
                   'device': self.device,
-                  'lng': self.route.start_point.longitude,
-                  'lat': self.route.start_point.latitude}
+                  'lng': str(self.route.start_point.longitude),
+                  'lat': str(self.route.start_point.latitude)}
         params = sign_param(params)
         async with aiohttp.request('GET', start_url, params=params) as response:
             data = await response.json()
@@ -66,9 +66,9 @@ class FudanAPI:
         update_url = 'https://sport.fudan.edu.cn/sapi/run/point'
         params = {'userid': self.user_id,
                   'token': self.token,
-                  'run_id': self.run_id,
-                  'lng': point.longitude,
-                  'lat': point.latitude}
+                  'run_id': str(self.run_id),
+                  'lng': str(point.longitude),
+                  'lat': str(point.latitude)}
         params = sign_param(params)
         async with aiohttp.request('GET', update_url, params=params) as response:
             try:
@@ -81,11 +81,11 @@ class FudanAPI:
         finish_url = 'https://sport.fudan.edu.cn/sapi/run/finish'
         params = {'userid': self.user_id,
                   'token': self.token,
-                  'run_id': self.run_id,
+                  'run_id': str(self.run_id),
                   'system': self.system,
                   'device': self.device,
-                  'lng': point.longitude,
-                  'lat': point.latitude}
+                  'lng': str(point.longitude),
+                  'lat': str(point.latitude)}
         params = sign_param(params)
         async with aiohttp.request('GET', finish_url, params=params) as response:
             data = await response.json()
