@@ -76,11 +76,13 @@ class FudanAPI:
                   'lng': point.longitude,
                   'lat': point.latitude}
         params = sign_param(params)
-        response = requests.get(update_url, params=params, verify=False)
         try:
+            response = requests.get(update_url, params=params, verify=False)
             data = response.json()
             return data['message']
-        except:
+        except requests.RequestException:
+            return "Network Error"
+        except KeyError:
             return response.text
 
     def finish(self, point):
